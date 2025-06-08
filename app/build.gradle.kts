@@ -49,8 +49,8 @@ dependencies {
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
 
-    // MPAndroidChart (fixed version coordinate)
-    implementation(libs.mpandroidchart)
+    // MPAndroidChart
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     // CardView
     implementation("androidx.cardview:cardview:1.0.0")

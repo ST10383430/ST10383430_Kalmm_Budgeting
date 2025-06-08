@@ -31,6 +31,7 @@ class ReportsExpenseActivity : AppCompatActivity() {
 
         binding.backButton.setOnClickListener { finish() }
 
+
         binding.incomeTab.setOnClickListener {
             startActivity(Intent(this, ReportsIncomeActivity::class.java))
             finish()
@@ -45,6 +46,11 @@ class ReportsExpenseActivity : AppCompatActivity() {
         binding.expenseTab.setTextColor(
             ContextCompat.getColor(this, R.color.purple_700)
         )
+
+        // navigate to Annual Overview
+        binding.annualOverviewButton.setOnClickListener {
+            startActivity(Intent(this, AnnualOverviewActivity::class.java))
+        }
 
         setupBottomNav()
         setupRecyclerView()

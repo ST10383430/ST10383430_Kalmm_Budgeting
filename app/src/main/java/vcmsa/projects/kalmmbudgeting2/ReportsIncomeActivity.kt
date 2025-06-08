@@ -49,6 +49,11 @@ class ReportsIncomeActivity : AppCompatActivity() {
             startActivity(Intent(this, LogNewEntryActivity::class.java))
         }
 
+        //navigate to Annual Overview
+        binding.annualOverviewButton.setOnClickListener {
+            startActivity(Intent(this, AnnualOverviewActivity::class.java))
+        }
+
         setupBottomNav()
         setupRecyclerView()
         loadData()
