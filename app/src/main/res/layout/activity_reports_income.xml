@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Back, Title, Add Entry -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="@string/back"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Reports"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginStart="8dp"/>
+
+            <ImageButton
+                android:id="@+id/addEntryButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_add"
+                android:contentDescription="@string/add_entry"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+        </LinearLayout>
+
+        <!-- Balance Tracker -->
+        <TextView
+            android:id="@+id/balanceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Balance"
+            android:layout_marginTop="16dp"/>
+        <TextView
+            android:id="@+id/balanceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R 0.00"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <!-- Tabs: Expense / Income -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp">
+            <TextView
+                android:id="@+id/expenseTab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Expense"
+                android:padding="8dp"
+                android:background="?attr/selectableItemBackground"/>
+            <TextView
+                android:id="@+id/incomeTab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Income"
+                android:textStyle="bold"
+                android:padding="8dp"
+                android:layout_marginStart="16dp"
+                android:background="?attr/selectableItemBackground"/>
+        </LinearLayout>
+
+        <!-- Total Monthly Income -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Monthly Income"
+            android:layout_marginTop="24dp"/>
+        <TextView
+            android:id="@+id/monthlyIncomeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R 0.00"
+            android:textSize="22sp"
+            android:textStyle="bold"/>
+
+        <!-- Category Filter -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter by Category"
+            android:layout_marginTop="24dp"/>
+        <Spinner
+            android:id="@+id/categoryFilterSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!-- Income List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/incomeRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Annual Overview Button -->
+        <Button
+            android:id="@+id/annualOverviewButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Annual Overview"
+            android:layout_marginTop="24dp"/>
+
+        <!-- Bottom Navigation -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="32dp">
+
+            <ImageButton
+                android:id="@+id/navHomeButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_home"
+                android:contentDescription="@string/home"/>
+            <ImageButton
+                android:id="@+id/navReportsButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_reports"
+                android:contentDescription="@string/reports"
+                android:layout_marginHorizontal="24dp"/>
+            <ImageButton
+                android:id="@+id/navProfileButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_profile"
+                android:contentDescription="@string/profile"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
