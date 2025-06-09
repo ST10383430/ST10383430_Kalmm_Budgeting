@@ -12,33 +12,57 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KalmmBudgeting2"
         tools:targetApi="31">
+
+        <!-- Profile screen -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+
+        <!-- Create New Goal -->
         <activity
             android:name=".CreateNewGoalActivity"
             android:exported="false" />
+
+        <!-- Home dashboard -->
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
+
+        <!-- Annual Overview chart -->
         <activity
             android:name=".AnnualOverviewActivity"
             android:exported="false" />
+
+        <!-- Reports: Income -->
         <activity
             android:name=".ReportsIncomeActivity"
             android:exported="false" />
+
+        <!-- Reports: Expense -->
         <activity
             android:name=".ReportsExpenseActivity"
             android:exported="false" />
+
+        <!-- Log a new entry -->
         <activity
             android:name=".LogNewEntryActivity"
             android:exported="false" />
+
+        <!-- Full Achievements list -->
+        <activity
+            android:name=".AchievementsDetailActivity"
+            android:exported="false" />
+
+        <!-- Launcher / Main entrypoint -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

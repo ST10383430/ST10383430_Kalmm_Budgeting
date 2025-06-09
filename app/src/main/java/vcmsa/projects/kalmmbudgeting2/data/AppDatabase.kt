@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 @Database(
-    entities = [BudgetEntry::class, ExpenseGoal::class],
+    entities = [BudgetEntry::class, ExpenseGoal::class, Achievement::class],
     version  = 3,                // bump version to 3
     exportSchema = false
 )
@@ -18,6 +18,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun budgetEntryDao(): BudgetEntryDao
     abstract fun expenseGoalDao(): ExpenseGoalDao
+    abstract fun achievementDao(): AchievementDao
 
     companion object {
         @Volatile private var INSTANCE: AppDatabase? = null
@@ -33,7 +34,9 @@ abstract class AppDatabase : RoomDatabase() {
                 AppDatabase::class.java,
                 "kalmmbudget.db"
             )
-                .fallbackToDestructiveMigration()   // <-- drop & recreate on version mismatch
+
+                .fallbackToDestructiveMigration()
                 .build()
+
     }
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <!-- Icon for the achievement -->
+    <ImageView
+        android:id="@+id/iconImageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="@string/achievement_icon"
+        android:layout_marginEnd="12dp" />
+
+    <!-- Title and description stacked vertically -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Achievement Title"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Achievement description goes here"
+            android:textSize="14sp"
+            android:layout_marginTop="2dp" />
+
+    </LinearLayout>
+
+    <!-- Locked/Unlocked date or status -->
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="Locked"
+        android:textSize="12sp"
+        android:paddingStart="8dp"/>
+</LinearLayout>

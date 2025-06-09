@@ -29,10 +29,13 @@ class CreateNewGoalActivity : AppCompatActivity() {
         binding = ActivityCreateNewGoalBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Ensure our three achievement definitions exist
+        lifecycleScope.launch { ensureAchievementsDefined() }
+
         // Back
         binding.backButton.setOnClickListener { finish() }
 
-        // Goal type toggle (no layout change, just visual)
+        // Goal type toggle
         binding.spendingGoalButton.setOnClickListener {
             selectedGoalType = GoalType.SPENDING
             updateGoalTypeUI()
@@ -82,7 +85,6 @@ class CreateNewGoalActivity : AppCompatActivity() {
         binding.navHomeButton.setOnClickListener {
             startActivity(Intent(this, HomeActivity::class.java))
         }
-        // binding.navProfileButton … if you re-enable profile later
     }
 
     private fun updateGoalTypeUI() {
@@ -103,7 +105,7 @@ class CreateNewGoalActivity : AppCompatActivity() {
 
     private fun submitGoal() {
         val name      = binding.goalNameEditText.text.toString().trim()
-        val notes     = binding.goalDescriptionEditText.text.toString().trim() // optional field
+        val notes     = binding.goalDescriptionEditText.text.toString().trim()
         val amountStr = binding.goalAmountEditText.text.toString().trim()
         val category  = binding.categorySpinner.selectedItem as String
 
@@ -118,23 +120,28 @@ class CreateNewGoalActivity : AppCompatActivity() {
             return
         }
 
-        // Build and save (no deadline)
+        // Build goal (no deadline)
         val goal = ExpenseGoal(
             description = name,
             maxAllowed  = amount,
             category    = category
         )
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            db.expenseGoalDao().insertGoal(goal)
-            withContext(Dispatchers.Main) {
-                Toast.makeText(
-                    this@CreateNewGoalActivity,
-                    "Goal created!",
-                    Toast.LENGTH_SHORT
-                ).show()
-                finish()
+        lifecycleScope.launch {
+            // 1) Insert into DB
+            withContext(Dispatchers.IO) {
+                db.expenseGoalDao().insertGoal(goal)
             }
+            // 2) Unlock “Smart Saver” achievement (id = 2)
+            unlockAchievement(2)
+
+            // 3) Notify & finish
+            Toast.makeText(
+                this@CreateNewGoalActivity,
+                "Goal created!",
+                Toast.LENGTH_SHORT
+            ).show()
+            finish()
         }
     }
 }

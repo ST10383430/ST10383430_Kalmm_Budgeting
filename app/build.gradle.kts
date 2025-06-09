@@ -31,29 +31,34 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
+        // so Room can see your Kotlin parameter names (e.g. `category`)
+        freeCompilerArgs += listOf("-Xjava-parameters")
     }
 
     buildFeatures {
         viewBinding = true
     }
-
-    kotlinOptions {
-        jvmTarget = "11"
-        freeCompilerArgs += listOf("-Xjava-parameters")
-    }
 }
 
 dependencies {
+    // Room
     implementation("androidx.room:room-runtime:2.5.1")
     implementation("androidx.room:room-ktx:2.5.1")
     kapt("androidx.room:room-compiler:2.5.1")
 
+    // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+
+    // Charting
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    // CardView
     implementation("androidx.cardview:cardview:1.0.0")
 
+    // AndroidX & Material
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

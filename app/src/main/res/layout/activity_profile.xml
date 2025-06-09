@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Top bar: Back arrow + title -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="@string/back"
+                android:background="?attr/selectableItemBackgroundBorderless" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/profile"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <!-- blank right slot -->
+            <View
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
+        </LinearLayout>
+
+        <!-- Profile Icon + Username -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="24dp">
+
+            <ImageView
+                android:id="@+id/profileIcon"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_profile"
+                android:contentDescription="@string/profile_icon" />
+
+            <TextView
+                android:id="@+id/usernameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginStart="16dp" />
+        </LinearLayout>
+
+        <!-- Savings Balance Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@color/purple_700">
+
+                <TextView
+                    android:id="@+id/balanceLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="savings_balance"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/balanceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="R 0.00"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@android:color/white"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Achievements Header -->
+        <TextView
+            android:id="@+id/achievementsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Achievements"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="32dp"/>
+
+        <!-- Unlocked Achievements (horizontal) -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/unlockedRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+
+        <!-- All Achievements List (horizontal) -->
+
+        <!-- "More" link -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/allAchievementsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/moreAchievementsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="more"
+
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <!-- Other Services Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            app:cardCornerRadius="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="16dp">
+
+                <ImageButton
+                    android:id="@+id/settingsButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_settings"
+                    android:contentDescription="@string/settings"/>
+
+                <ImageButton
+                    android:id="@+id/aboutButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_info"
+                    android:contentDescription="@string/about"
+                    android:layout_marginStart="24dp"/>
+
+                <ImageButton
+                    android:id="@+id/helpButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_help"
+                    android:contentDescription="@string/help"
+                    android:layout_marginStart="24dp"/>
+
+                <ImageButton
+                    android:id="@+id/historyButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_history"
+                    android:contentDescription="@string/history"
+                    android:layout_marginStart="24dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Bottom Navigation -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="32dp">
+
+            <ImageButton
+                android:id="@+id/navReportsButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_reports"
+                android:contentDescription="@string/reports"/>
+
+            <ImageButton
+                android:id="@+id/navProfileButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_profile"
+                android:contentDescription="@string/profile"
+                android:layout_marginHorizontal="24dp"/>
+
+            <ImageButton
+                android:id="@+id/navHomeButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_home"
+                android:contentDescription="@string/home"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

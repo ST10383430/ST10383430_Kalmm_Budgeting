@@ -131,8 +131,8 @@ class ReportsExpenseActivity : AppCompatActivity() {
         binding.navReportsButton.setOnClickListener {
             // already here
         }
-     //   binding.navProfileButton.setOnClickListener {
-        //    startActivity(Intent(this, ProfileActivity::class.java))
-      //  }
+        binding.navProfileButton.setOnClickListener {
+           startActivity(Intent(this, ProfileActivity::class.java))
+        }
     }
 }

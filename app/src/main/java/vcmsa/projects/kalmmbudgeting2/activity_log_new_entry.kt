@@ -1,6 +1,5 @@
 package vcmsa.projects.kalmmbudgeting2
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
@@ -9,17 +8,21 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import vcmsa.projects.kalmmbudgeting2.R
-import vcmsa.projects.kalmmbudgeting2.data.AppDatabase
-import vcmsa.projects.kalmmbudgeting2.data.BudgetEntry
-import vcmsa.projects.kalmmbudgeting2.databinding.ActivityLogNewEntryBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import vcmsa.projects.kalmmbudgeting2.data.AppDatabase
+import vcmsa.projects.kalmmbudgeting2.data.BudgetEntry
+import vcmsa.projects.kalmmbudgeting2.databinding.ActivityLogNewEntryBinding
 import java.text.SimpleDateFormat
 import java.util.*
+
+// Imports for our achievements helpers:
+import vcmsa.projects.kalmmbudgeting2.ensureAchievementsDefined
+import vcmsa.projects.kalmmbudgeting2.unlockAchievement
 
 class LogNewEntryActivity : AppCompatActivity() {
 
@@ -40,6 +43,9 @@ class LogNewEntryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLogNewEntryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Make sure our achievements exist in the DB
+        lifecycleScope.launch { ensureAchievementsDefined() }
 
         setupCategorySpinner()
         setupDatePicker()
@@ -62,12 +68,10 @@ class LogNewEntryActivity : AppCompatActivity() {
             DatePickerDialog(
                 this,
                 { _, year, month, day ->
-                    val selected = Calendar.getInstance().apply {
-                        set(year, month, day)
-                    }
+                    cal.set(year, month, day)
                     binding.dateEditText.setText(
                         SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                            .format(selected.time)
+                            .format(cal.time)
                     )
                 },
                 cal.get(Calendar.YEAR),
@@ -85,9 +89,12 @@ class LogNewEntryActivity : AppCompatActivity() {
         binding.addImageButton.setOnClickListener { pickImage.launch("image/*") }
         binding.submitButton.setOnClickListener { submitEntry() }
 
-        binding.navHomeButton.setOnClickListener { startActivity(Intent(this, HomeActivity::class.java)) }
-         binding.navReportsButton.setOnClickListener { startActivity(Intent(this, ReportsExpenseActivity::class.java)) }
-        // binding.navSettingsButton.setOnClickListener { startActivity(Intent(this, SettingsActivity::class.java)) }
+        binding.navHomeButton.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
+        binding.navReportsButton.setOnClickListener {
+            startActivity(Intent(this, ReportsExpenseActivity::class.java))
+        }
     }
 
     private fun promptNewCategory() {
@@ -101,7 +108,8 @@ class LogNewEntryActivity : AppCompatActivity() {
                     Toast.makeText(this, "Invalid or duplicate category", Toast.LENGTH_SHORT).show()
                 } else {
                     categories.add(newCat)
-                    (binding.categorySpinner.adapter as ArrayAdapter<*>).notifyDataSetChanged()
+                    (binding.categorySpinner.adapter as ArrayAdapter<*>)
+                        .notifyDataSetChanged()
                 }
             }
             .setNegativeButton("Cancel", null)
@@ -110,12 +118,12 @@ class LogNewEntryActivity : AppCompatActivity() {
 
     private fun submitEntry() {
         // Gather & validate inputs
-        val entryTypeId = binding.entryTypeRadioGroup.checkedRadioButtonId
+        val entryTypeId     = binding.entryTypeRadioGroup.checkedRadioButtonId
         val paymentMethodId = binding.paymentMethodRadioGroup.checkedRadioButtonId
-        val amountText = binding.amountEditText.text.toString()
-        val dateText = binding.dateEditText.text.toString()
-        val descText = binding.descriptionEditText.text.toString()
-        val category = binding.categorySpinner.selectedItem as String
+        val amountText      = binding.amountEditText.text.toString()
+        val dateText        = binding.dateEditText.text.toString()
+        val descText        = binding.descriptionEditText.text.toString()
+        val category        = binding.categorySpinner.selectedItem as String
 
         if (entryTypeId == -1 || paymentMethodId == -1 ||
             amountText.isBlank() || dateText.isBlank() || descText.isBlank()
@@ -132,36 +140,46 @@ class LogNewEntryActivity : AppCompatActivity() {
 
         val entryType = if (entryTypeId == R.id.radioIncome) "Income" else "Expense"
         val paymentMethod = when (paymentMethodId) {
-            R.id.radioCash -> "Cash"
+            R.id.radioCash  -> "Cash"
             R.id.radioDebit -> "Debit"
-            else -> "Credit"
+            else            -> "Credit"
         }
 
-        // Parse date
         val parsedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             .parse(dateText)!!
 
         val entry = BudgetEntry(
-            entryType = entryType,
-            amount = amount,
+            entryType     = entryType,
+            amount        = amount,
             paymentMethod = paymentMethod,
-            date = parsedDate,
-            description = descText,
-            category = category,
-            imageUri = imageUri?.toString()
+            date          = parsedDate,
+            description   = descText,
+            category      = category,
+            imageUri      = imageUri?.toString()
         )
 
-        // Persist with Room on IO thread
-        lifecycleScope.launch(Dispatchers.IO) {
-            db.budgetEntryDao().insert(entry)
-            withContext(Dispatchers.Main) {
-                Toast.makeText(
-                    this@LogNewEntryActivity,
-                    "Entry saved!",
-                    Toast.LENGTH_SHORT
-                ).show()
-                finish()
+        // Single coroutine on Main + explicit I/O boundaries
+        lifecycleScope.launch {
+            // 1) Insert the new entry
+            withContext(Dispatchers.IO) {
+                db.budgetEntryDao().insert(entry)
             }
+
+            // 2) Check if we've hit 3 expenses now
+            val expenseCount = withContext(Dispatchers.IO) {
+                db.budgetEntryDao().countExpenses()
+            }
+            if (expenseCount == 3) {
+                unlockAchievement(3)   // Diligent User
+            }
+
+            // 3) UI feedback & close
+            Toast.makeText(
+                this@LogNewEntryActivity,
+                "Entry saved!",
+                Toast.LENGTH_SHORT
+            ).show()
+            finish()
         }
     }
 }

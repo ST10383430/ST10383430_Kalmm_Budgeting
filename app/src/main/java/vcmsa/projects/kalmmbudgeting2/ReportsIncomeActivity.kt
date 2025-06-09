@@ -121,9 +121,9 @@ class ReportsIncomeActivity : AppCompatActivity() {
             startActivity(Intent(this, HomeActivity::class.java))
         }
         binding.navReportsButton.setOnClickListener { /* here */ }
-   //     binding.navProfileButton.setOnClickListener {
-    //        startActivity(Intent(this, ProfileActivity::class.java))
-    //    }
+        binding.navProfileButton.setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
     }
 }
 
