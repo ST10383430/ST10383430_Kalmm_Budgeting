@@ -125,9 +125,9 @@ class ReportsExpenseActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNav() {
-      //  binding.navHomeButton.setOnClickListener {
-       //     startActivity(Intent(this, HomeActivity::class.java))
-      //  }
+        binding.navHomeButton.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
         binding.navReportsButton.setOnClickListener {
             // already here
         }

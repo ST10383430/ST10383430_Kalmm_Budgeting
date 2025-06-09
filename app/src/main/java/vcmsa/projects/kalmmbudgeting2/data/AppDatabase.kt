@@ -6,21 +6,29 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [BudgetEntry::class], version = 1, exportSchema = false)
+@Database(
+    entities = [BudgetEntry::class, ExpenseGoal::class],
+    version  = 1,
+    exportSchema = false
+)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun budgetEntryDao(): BudgetEntryDao
+    abstract fun expenseGoalDao(): ExpenseGoalDao
 
     companion object {
         @Volatile private var INSTANCE: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase =
             INSTANCE ?: synchronized(this) {
-                Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    "budget_app.db"
-                ).build().also { INSTANCE = it }
+                INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
             }
+
+        private fun buildDatabase(context: Context) =
+            Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java,
+                "kalmmbudget.db"
+            ).build()
     }
 }

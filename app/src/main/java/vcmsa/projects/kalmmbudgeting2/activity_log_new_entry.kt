@@ -84,8 +84,8 @@ class LogNewEntryActivity : AppCompatActivity() {
         binding.addCategoryButton.setOnClickListener { promptNewCategory() }
         binding.addImageButton.setOnClickListener { pickImage.launch("image/*") }
         binding.submitButton.setOnClickListener { submitEntry() }
-        // Navigation buttons can be uncommented when those Activities exist
-        // binding.navHomeButton.setOnClickListener { startActivity(Intent(this, HomeActivity::class.java)) }
+
+        binding.navHomeButton.setOnClickListener { startActivity(Intent(this, HomeActivity::class.java)) }
          binding.navReportsButton.setOnClickListener { startActivity(Intent(this, ReportsExpenseActivity::class.java)) }
         // binding.navSettingsButton.setOnClickListener { startActivity(Intent(this, SettingsActivity::class.java)) }
     }

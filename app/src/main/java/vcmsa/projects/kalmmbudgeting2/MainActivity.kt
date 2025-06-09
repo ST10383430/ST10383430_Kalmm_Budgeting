@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         // set up the click listener
         btnLogNewEntry.setOnClickListener {
             // create an explicit Intent to start LogNewEntryActivity
-            val intent = Intent(this, LogNewEntryActivity::class.java)
+            val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
     }

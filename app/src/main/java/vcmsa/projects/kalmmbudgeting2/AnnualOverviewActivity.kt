@@ -1,5 +1,6 @@
 package vcmsa.projects.kalmmbudgeting2
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -140,9 +141,9 @@ class AnnualOverviewActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNav() {
-       // binding.navHomeButton.setOnClickListener {
-         //   startActivity(Intent(this, HomeActivity::class.java))
-       // }
+        binding.navHomeButton.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
         binding.navReportsButton.setOnClickListener { /* already here */ }
       //  binding.navProfileButton.setOnClickListener {
        //     startActivity(Intent(this, ProfileActivity::class.java))
