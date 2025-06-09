@@ -179,10 +179,10 @@
                 android:layout_marginHorizontal="24dp"/>
 
             <ImageButton
-                android:id="@+id/navSettingsButton"
+                android:id="@+id/navProfileButton"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/ic_settings"
+                android:src="@drawable/ic_profile"
                 android:contentDescription="@string/settings"/>
         </LinearLayout>
 

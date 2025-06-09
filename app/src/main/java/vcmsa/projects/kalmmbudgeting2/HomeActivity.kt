@@ -44,9 +44,9 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this, ReportsExpenseActivity::class.java))
         }
         binding.navHomeButton.setOnClickListener { /* already here */ }
-       // binding.navSettingsButton.setOnClickListener {
-      //      startActivity(Intent(this, SettingsActivity::class.java))
-       // }
+       // binding.navProfileButton.setOnClickListener {
+        //        //    startActivity(Intent(this, ProfileActivity::class.java))
+        //  }
 
         // --- Recycler setup + load data ---
         setupGoalsRecycler()
