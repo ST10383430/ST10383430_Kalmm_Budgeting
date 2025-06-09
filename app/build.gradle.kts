@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt")
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -38,21 +38,20 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    kotlinOptions {
+        jvmTarget = "11"
+        freeCompilerArgs += listOf("-Xjava-parameters")
+    }
 }
 
 dependencies {
-    // Room runtime & ktx
     implementation("androidx.room:room-runtime:2.5.1")
     implementation("androidx.room:room-ktx:2.5.1")
     kapt("androidx.room:room-compiler:2.5.1")
 
-    // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
-
-    // MPAndroidChart
-    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-
-    // CardView
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation("androidx.cardview:cardview:1.0.0")
 
     implementation(libs.androidx.core.ktx)

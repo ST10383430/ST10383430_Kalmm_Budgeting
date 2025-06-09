@@ -38,13 +38,12 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(this)
             }
         }
-        //binding.newGoalButton.setOnClickListener {
-        //    startActivity(Intent(this, LogNewGoalActivity::class.java))
-      //  }
+        binding.newGoalButton.setOnClickListener {
+            startActivity(Intent(this, CreateNewGoalActivity::class.java)) }
         binding.navReportsButton.setOnClickListener {
             startActivity(Intent(this, ReportsExpenseActivity::class.java))
         }
-       // binding.navHomeButton.setOnClickListener { /* already here */ }
+        binding.navHomeButton.setOnClickListener { /* already here */ }
        // binding.navSettingsButton.setOnClickListener {
       //      startActivity(Intent(this, SettingsActivity::class.java))
        // }
@@ -70,7 +69,7 @@ class HomeActivity : AppCompatActivity() {
             // 2. Load goals & compute spentSoFar
             val rawGoals = db.expenseGoalDao().getAllGoals()
             val progressList = rawGoals.map { goal ->
-                val spent = db.expenseGoalDao().getSpentForCategory(goal.description)
+                val spent = db.budgetEntryDao().getExpenses().sumOf(BudgetEntry::amount)
                 GoalProgress(
                     id         = goal.id,
                     description= goal.description,
